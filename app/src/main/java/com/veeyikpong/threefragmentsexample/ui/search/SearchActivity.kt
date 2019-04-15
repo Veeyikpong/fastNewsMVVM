@@ -1,16 +1,16 @@
-package com.veeyikpong.threefragmentsexample
+package com.veeyikpong.threefragmentsexample.ui.search
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.fragment.app.Fragment
 import com.veeyikpong.easyfragmentcontainer.FragmentContainer
+import com.veeyikpong.threefragmentsexample.R
 import com.veeyikpong.threefragmentsexample.ui.details.NewsDetailsFragment
-import com.veeyikpong.threefragmentsexample.ui.search.SearchFragment
 
 import kotlinx.android.synthetic.main.activity_main.*
 
-class SampleActivity : AppCompatActivity() {
+class SearchActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,7 +36,7 @@ class SampleActivity : AppCompatActivity() {
                 supportActionBar!!.title = getString(R.string.search_news)
             }
             is NewsDetailsFragment -> {
-                supportActionBar!!.title = getString(R.string.second_fragment)
+                supportActionBar!!.title = getString(R.string.news_details)
             }
         }
     }

@@ -1,4 +1,4 @@
-package com.veeyikpong.threefragmentsexample.search.adapter
+package com.veeyikpong.threefragmentsexample.ui.search.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -25,7 +25,7 @@ class NewsAdapter(val context: Context, var newsList: List<News>): RecyclerView.
         )
         v.itemView.setOnClickListener {
             if(::onItemClickListener.isInitialized){
-                onItemClickListener.onItemClick(((v) as News))
+                onItemClickListener.onItemClick(newsList[v.adapterPosition])
             }
         }
         return v

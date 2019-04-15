@@ -1,15 +1,24 @@
 package com.veeyikpong.threefragmentsexample.api.response
 
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
-class Article{
-
-    @SerializedName("id")
-    var id: Int = -1
-
+class News: Serializable{
     @SerializedName("title")
     lateinit var title: String
 
-    @SerializedName("body")
+    @SerializedName("description")
     lateinit var body: String
+
+    @SerializedName("author")
+    lateinit var author: String
+
+    @SerializedName("url")
+    lateinit var url: String
+
+    @SerializedName("urlToImage")
+    lateinit var imageURL: String
+
+    @SerializedName("publishedAt")
+    lateinit var publishedDate: String
 }

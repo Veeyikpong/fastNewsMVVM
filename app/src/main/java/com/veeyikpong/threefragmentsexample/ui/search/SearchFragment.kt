@@ -1,4 +1,4 @@
-package com.veeyikpong.threefragmentsexample.search
+package com.veeyikpong.threefragmentsexample.ui.search
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,13 +7,15 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.veeyikpong.threefragmentsexample.*
-import com.veeyikpong.threefragmentsexample.search.adapter.NewsAdapter
+import com.veeyikpong.threefragmentsexample.ui.search.adapter.NewsAdapter
 import kotlinx.android.synthetic.main.fragment_search.*
 import android.widget.EditText
 import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.veeyikpong.threefragmentsexample.api.response.News
+import com.veeyikpong.threefragmentsexample.ui.details.NewsDetailsFragment
+import kotlinx.android.synthetic.main.activity_main.*
 
 
 class SearchFragment : Fragment(),SearchContract.View {
@@ -28,6 +30,14 @@ class SearchFragment : Fragment(),SearchContract.View {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setPresenter(SearchPresenter(this))
+        newsAdapter = NewsAdapter(requireContext(),ArrayList())
+        newsAdapter.setOnItemClickListener(object: NewsAdapter.OnItemClickListener{
+            override fun onItemClick(news: News) {
+                val bundle = Bundle()
+                bundle.putSerializable(AppConstants.BUNDLE_KEY_NEWS,news)
+                requireActivity().fragmentContainer.addFragment(NewsDetailsFragment(),bundle)
+            }
+        })
     }
 
     override fun onCreateView(
@@ -38,8 +48,6 @@ class SearchFragment : Fragment(),SearchContract.View {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
         presenter.init()
 
         btn_search.setOnClickListener {
@@ -57,6 +65,12 @@ class SearchFragment : Fragment(),SearchContract.View {
                 return false
             }
         })
+
+        with(rv_news){
+            adapter = newsAdapter
+            layoutManager = LinearLayoutManager(requireContext())
+            addItemDecoration(DividerItemDecoration(requireContext(),DividerItemDecoration.VERTICAL))
+        }
     }
 
     fun search(){
@@ -84,14 +98,8 @@ class SearchFragment : Fragment(),SearchContract.View {
     }
 
     override fun showNews(newsList: List<News>) {
-        if(::newsAdapter.isInitialized){
+        if(::newsAdapter.isInitialized) {
             newsAdapter.updateList(newsList)
-        }else{
-            with(rv_news){
-                adapter = NewsAdapter(requireContext(),newsList)
-                layoutManager = LinearLayoutManager(requireContext())
-                addItemDecoration(DividerItemDecoration(requireContext(),DividerItemDecoration.VERTICAL))
-            }
         }
         ll_result.visibility = View.VISIBLE
     }

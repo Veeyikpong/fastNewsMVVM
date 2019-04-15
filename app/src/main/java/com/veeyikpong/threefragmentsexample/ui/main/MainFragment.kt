@@ -1,4 +1,4 @@
-package com.veeyikpong.threefragmentsexample
+package com.veeyikpong.threefragmentsexample.ui.main
 
 
 import android.content.Intent
@@ -7,6 +7,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.veeyikpong.threefragmentsexample.R
+import com.veeyikpong.threefragmentsexample.ui.search.SearchActivity
 import kotlinx.android.synthetic.main.fragment_main.*
 
 class MainFragment : Fragment() {
@@ -22,7 +24,7 @@ class MainFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         btn_pressMe.setOnClickListener {
-            val intent = Intent(requireActivity(), SampleActivity::class.java)
+            val intent = Intent(requireActivity(), SearchActivity::class.java)
             startActivity(intent)
         }
     }

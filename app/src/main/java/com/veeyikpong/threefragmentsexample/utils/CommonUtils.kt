@@ -1,4 +1,4 @@
-package com.veeyikpong.threefragmentsexample
+package com.veeyikpong.threefragmentsexample.utils
 
 import java.text.ParseException
 import java.text.SimpleDateFormat

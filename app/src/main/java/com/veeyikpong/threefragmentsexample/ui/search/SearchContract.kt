@@ -1,6 +1,6 @@
-package com.veeyikpong.threefragmentsexample.search
+package com.veeyikpong.threefragmentsexample.ui.search
 
-import com.veeyikpong.threefragmentsexample.BaseView
+import com.veeyikpong.threefragmentsexample.ui.base.BaseView
 import com.veeyikpong.threefragmentsexample.api.response.News
 
 interface SearchContract{
@@ -10,7 +10,7 @@ interface SearchContract{
         fun onDestroy()
     }
 
-    interface View: BaseView<Presenter>{
+    interface View: BaseView<Presenter> {
         fun showLoading()
         fun hideLoading()
         fun displayTotalResult(totalResult: String)

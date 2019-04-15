@@ -1,31 +1,33 @@
-package com.veeyikpong.threefragmentsexample.search
+package com.veeyikpong.threefragmentsexample.ui.search
 
-import com.veeyikpong.threefragmentsexample.BasePresenter
+import com.veeyikpong.threefragmentsexample.ui.base.BasePresenter
 import com.veeyikpong.threefragmentsexample.BuildConfig
 import com.veeyikpong.threefragmentsexample.MyApplication
 import com.veeyikpong.threefragmentsexample.api.ApiService
+import com.veeyikpong.threefragmentsexample.api.response.News
 import com.veeyikpong.threefragmentsexample.api.response.SearchNewsResponse
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.observers.DisposableObserver
 import io.reactivex.schedulers.Schedulers
-import java.util.*
-import javax.inject.Inject
+import org.koin.core.KoinComponent
+import org.koin.core.inject
 
+class SearchPresenter(val view: SearchFragment) : BasePresenter(), SearchContract.Presenter, KoinComponent {
 
-class SearchPresenter(val view: SearchFragment) : BasePresenter(), SearchContract.Presenter {
+    private val apiService: ApiService by inject()
 
-    @Inject
-    lateinit var serviceProvider: ApiService
+    var newsList: List<News>
 
     var getPostDisposable: Disposable? = null
 
     init {
-        MyApplication.appComponent.inject(this)
+        newsList = ArrayList()
     }
 
     override fun init() {
         if (isInitialized) {
+            view.showNews(newsList)
             return
         }
 
@@ -37,7 +39,7 @@ class SearchPresenter(val view: SearchFragment) : BasePresenter(), SearchContrac
 
     override fun searchNews(query: String) {
         view.showLoading()
-        getPostDisposable = serviceProvider.searchNews(query, BuildConfig.API_KEY)
+        getPostDisposable = apiService.searchNews(query, BuildConfig.API_KEY)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(Schedulers.io())
             .subscribeWith(object: DisposableObserver<SearchNewsResponse>() {
@@ -53,6 +55,7 @@ class SearchPresenter(val view: SearchFragment) : BasePresenter(), SearchContrac
                     }
 
                     view.displayTotalResult(response.totalResults.toString())
+                    newsList = response.newsList
                     view.showNews(response.newsList)
                 }
 

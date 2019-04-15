@@ -1,4 +1,4 @@
-package com.veeyikpong.threefragmentsexample.search.adapter
+package com.veeyikpong.threefragmentsexample.ui.search.adapter
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView

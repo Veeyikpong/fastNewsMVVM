@@ -2,10 +2,14 @@ package com.veeyikpong.threefragmentsexample.api.response
 
 import com.google.gson.annotations.SerializedName
 
-class GetPostsResponse{
+class SearchNewsResponse{
     @SerializedName("status")
     lateinit var status: String
 
-    lateinit var todoList: List<Article>
+    @SerializedName("totalResults")
+    var totalResults: Int = 0
+
+    @SerializedName("articles")
+    lateinit var newsList: List<News>
 }
 

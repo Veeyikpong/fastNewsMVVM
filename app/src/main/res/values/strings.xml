@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">ThreeFragmentsExample</string>
+
+    <string name="name">Name</string>
+    <string name="age">Name</string>
+    <string name="dob">Date of birth</string>
+    <string name="gender">Gender</string>
+    <string name="next">Next</string>
+
+    <string name="enter_details">Enter details</string>
+
+    <string name="hello">Hello</string>
+
+    <string name="bye">Bye</string>
+
+    <string name="press_me">Press Me</string>
+</resources>

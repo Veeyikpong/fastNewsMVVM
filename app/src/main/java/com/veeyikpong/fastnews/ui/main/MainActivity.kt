@@ -31,7 +31,7 @@ class MainActivity : AppCompatActivity() {
     private fun updateTitle(f: Fragment){
         when(f){
             is MainFragment ->{
-                supportActionBar!!.title = getString(R.string.top_headlines)
+                supportActionBar!!.title = getString(R.string.app_name)
             }
         }
     }

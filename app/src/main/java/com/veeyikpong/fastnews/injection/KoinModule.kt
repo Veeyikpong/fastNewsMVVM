@@ -1,4 +1,4 @@
-package com.veeyikpong.fastnews.daggerinjection
+package com.veeyikpong.fastnews.injection
 
 import com.veeyikpong.fastnews.api.ApiService
 import org.koin.dsl.module

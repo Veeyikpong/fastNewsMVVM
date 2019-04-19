@@ -1,4 +1,4 @@
-package com.veeyikpong.fastnews.ui.details
+package com.veeyikpong.fastnews.ui.searchnews.details
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -11,17 +11,6 @@ import com.veeyikpong.fastnews.R
 import kotlinx.android.synthetic.main.fragment_news_details.*
 
 class NewsDetailsFragment : Fragment(),NewsDetailsContract.View {
-    override fun showLoading() {
-
-    }
-
-    override fun hideLoading() {
-
-    }
-
-    override fun showDetails() {
-
-    }
 
     private lateinit var presenter: NewsDetailsContract.Presenter
 

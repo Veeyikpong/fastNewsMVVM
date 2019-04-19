@@ -1,7 +1,7 @@
 package com.veeyikpong.fastnews
 
 import android.app.Application
-import com.veeyikpong.fastnews.daggerinjection.netModule
+import com.veeyikpong.fastnews.injection.netModule
 import org.koin.core.context.startKoin
 
 class MyApplication: Application(){

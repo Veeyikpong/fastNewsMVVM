@@ -12,7 +12,5 @@
     <string name="author_by">By %1$s</string>
     <string name="read_more_at">Read more at <u>%1$s</u></string>
 
-    <string name="top_headlines">Top Headlines</string>
-
     <string name="something_went_wrong">Something went wrong. Please try again.</string>
 </resources>

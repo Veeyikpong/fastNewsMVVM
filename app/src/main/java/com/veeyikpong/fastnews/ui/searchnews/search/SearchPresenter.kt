@@ -1,4 +1,4 @@
-package com.veeyikpong.fastnews.ui.search
+package com.veeyikpong.fastnews.ui.searchnews.search
 
 import com.veeyikpong.fastnews.ui.base.BasePresenter
 import com.veeyikpong.fastnews.BuildConfig
@@ -12,7 +12,8 @@ import io.reactivex.schedulers.Schedulers
 import org.koin.core.KoinComponent
 import org.koin.core.inject
 
-class SearchPresenter(val view: SearchFragment) : BasePresenter(), SearchContract.Presenter, KoinComponent {
+class SearchPresenter(val view: SearchContract.View) : BasePresenter(),
+    SearchContract.Presenter, KoinComponent {
 
     private val apiService: ApiService by inject()
 

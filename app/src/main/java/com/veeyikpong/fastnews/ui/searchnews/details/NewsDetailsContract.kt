@@ -1,4 +1,4 @@
-package com.veeyikpong.fastnews.ui.details
+package com.veeyikpong.fastnews.ui.searchnews.details
 
 import android.os.Bundle
 import com.veeyikpong.fastnews.ui.base.BaseView
@@ -9,14 +9,11 @@ class NewsDetailsContract{
     }
 
     interface View: BaseView<Presenter> {
-        fun showLoading()
-        fun hideLoading()
         fun setImage(imageURL: String)
         fun setTitle(title: String)
         fun setAuthor(author: String)
         fun setDescription(description: String)
         fun setReadMoreURL(url: String)
-        fun showDetails()
         fun showError()
         fun close()
     }

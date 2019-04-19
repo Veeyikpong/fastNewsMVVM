@@ -1,4 +1,4 @@
-package com.veeyikpong.fastnews.ui.search
+package com.veeyikpong.fastnews.ui.searchnews.search
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,18 +7,18 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.veeyikpong.fastnews.*
-import com.veeyikpong.fastnews.ui.search.adapter.NewsAdapter
+import com.veeyikpong.fastnews.ui.searchnews.search.adapter.NewsAdapter
 import kotlinx.android.synthetic.main.fragment_search.*
 import android.widget.EditText
 import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.veeyikpong.fastnews.api.response.News
-import com.veeyikpong.fastnews.ui.details.NewsDetailsFragment
+import com.veeyikpong.fastnews.ui.searchnews.details.NewsDetailsFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
 
-class SearchFragment : Fragment(),SearchContract.View {
+class SearchFragment : Fragment(), SearchContract.View {
 
     private lateinit var presenter: SearchContract.Presenter
     private lateinit var newsAdapter: NewsAdapter

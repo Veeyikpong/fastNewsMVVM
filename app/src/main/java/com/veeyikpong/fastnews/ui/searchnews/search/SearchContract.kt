@@ -1,4 +1,4 @@
-package com.veeyikpong.fastnews.ui.search
+package com.veeyikpong.fastnews.ui.searchnews.search
 
 import com.veeyikpong.fastnews.ui.base.BaseView
 import com.veeyikpong.fastnews.api.response.News

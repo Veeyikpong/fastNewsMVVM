@@ -1,4 +1,4 @@
-package com.veeyikpong.fastnews.ui.search.adapter
+package com.veeyikpong.fastnews.ui.searchnews.search.adapter
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView

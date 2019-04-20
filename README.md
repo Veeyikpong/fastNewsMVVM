@@ -1,1 +1,2 @@
 # fastNews
+# fastNewsMVVM

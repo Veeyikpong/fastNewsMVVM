@@ -3,42 +3,23 @@ package com.veeyikpong.fastnews.ui.searchnews
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
-import androidx.fragment.app.Fragment
-import com.veeyikpong.easyfragmentcontainer.FragmentContainer
+import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.Navigation
 import com.veeyikpong.fastnews.R
-import com.veeyikpong.fastnews.ui.searchnews.details.NewsDetailsFragment
-import com.veeyikpong.fastnews.ui.searchnews.search.SearchFragment
-
-import kotlinx.android.synthetic.main.activity_main.*
+import com.veeyikpong.fastnews.viewmodels.SearchViewModel
 
 class SearchActivity : AppCompatActivity() {
+
+    private lateinit var viewModel: SearchViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search)
 
+        viewModel = ViewModelProviders.of(this).get(SearchViewModel::class.java)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-
-        fragmentContainer.addFragment(SearchFragment())
-        fragmentContainer.addFragmentListener(object : FragmentContainer.FragmentListener {
-            override fun onFragmentShow(f: Fragment) {
-                updateTitle(f)
-            }
-
-            override fun onFragmentDestroyed(f: Fragment) {
-
-            }
-        })
-    }
-
-    private fun updateTitle(f: Fragment) {
-        when (f) {
-            is SearchFragment -> {
-                supportActionBar!!.title = getString(R.string.search_news)
-            }
-            is NewsDetailsFragment -> {
-                supportActionBar!!.title = getString(R.string.news_details)
-            }
+        Navigation.findNavController(this,R.id.nav_host).addOnDestinationChangedListener { controller, destination, arguments ->
+            supportActionBar!!.title = destination.label
         }
     }
 
@@ -52,9 +33,8 @@ class SearchActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        if (fragmentContainer.back())
-            return
-
-        finish()
+        if(!Navigation.findNavController(this,R.id.nav_host).navigateUp()){
+            finish()
+        }
     }
 }

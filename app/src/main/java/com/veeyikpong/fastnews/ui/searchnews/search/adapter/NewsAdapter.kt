@@ -32,6 +32,9 @@ class NewsAdapter(val context: Context, var newsList: List<News>): RecyclerView.
     }
 
     override fun getItemCount(): Int {
+        if(newsList == null)
+            return 0
+
         return newsList.size
     }
 
@@ -41,7 +44,7 @@ class NewsAdapter(val context: Context, var newsList: List<News>): RecyclerView.
         holder.setBody(post.body)
     }
 
-    fun updateList(newsList: List<News>){
+    fun setList(newsList: List<News>){
         this.newsList = newsList
         notifyDataSetChanged()
     }

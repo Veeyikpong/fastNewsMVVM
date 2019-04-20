@@ -1,4 +1,4 @@
-package com.veeyikpong.fastnews.ui.searchnews.search
+package com.veeyikpong.fastnews.viewmodels
 
 import android.app.Application
 import android.view.View

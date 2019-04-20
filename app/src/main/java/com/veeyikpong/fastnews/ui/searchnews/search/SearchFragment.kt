@@ -11,31 +11,31 @@ import com.veeyikpong.fastnews.ui.searchnews.search.adapter.NewsAdapter
 import kotlinx.android.synthetic.main.fragment_search.*
 import android.widget.EditText
 import androidx.appcompat.widget.SearchView
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.veeyikpong.fastnews.api.Resource
 import com.veeyikpong.fastnews.api.response.News
-import com.veeyikpong.fastnews.ui.searchnews.details.NewsDetailsFragment
-import kotlinx.android.synthetic.main.activity_main.*
+import com.veeyikpong.fastnews.viewmodels.SearchViewModel
 
 
-class SearchFragment : Fragment(), SearchContract.View {
+class SearchFragment : Fragment() {
 
-    private lateinit var presenter: SearchContract.Presenter
+    private lateinit var viewModel: SearchViewModel
     private lateinit var newsAdapter: NewsAdapter
-
-    override fun setPresenter(presenter: SearchContract.Presenter) {
-        this.presenter = presenter
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setPresenter(SearchPresenter(this))
+
+        viewModel = ViewModelProviders.of(activity!!).get(SearchViewModel::class.java)
+
         newsAdapter = NewsAdapter(requireContext(),ArrayList())
         newsAdapter.setOnItemClickListener(object: NewsAdapter.OnItemClickListener{
             override fun onItemClick(news: News) {
-                val bundle = Bundle()
-                bundle.putSerializable(AppConstants.BUNDLE_KEY_NEWS,news)
-                requireActivity().fragmentContainer.addFragment(NewsDetailsFragment(),bundle)
+                viewModel.selectNews(news)
+                Navigation.findNavController(view!!).navigate(R.id.newsDetailsFragment)
             }
         })
     }
@@ -48,7 +48,23 @@ class SearchFragment : Fragment(), SearchContract.View {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        presenter.init()
+        viewModel.getNewsResponse().observe(this, Observer { resources->
+            when(resources.status){
+                Resource.Status.SUCCESS->{
+                    hideLoading()
+                    ll_result.visibility = View.VISIBLE
+                    newsAdapter.setList(resources.data!!.newsList)
+                    tv_totalResult.text = getString(R.string.results_found,resources.data!!.totalResults.toString())
+                }
+                Resource.Status.ERROR->{
+                    hideLoading()
+                    resources.errorMessage?.let { showError(it) }
+                }
+                Resource.Status.LOADING->{
+                    showLoading()
+                }
+            }
+        })
 
         btn_search.setOnClickListener {
             search()
@@ -76,7 +92,7 @@ class SearchFragment : Fragment(), SearchContract.View {
     fun search(){
         if(validate()){
             searchView.clearFocus()
-            presenter.searchNews(searchView.query.toString())
+            viewModel.searchNews(searchView.query.toString())
         }
     }
 
@@ -93,18 +109,11 @@ class SearchFragment : Fragment(), SearchContract.View {
         return validated
     }
 
-    override fun displayTotalResult(totalResult: String) {
+    fun displayTotalResult(totalResult: String) {
         tv_totalResult.text = getString(R.string.results_found,totalResult)
     }
 
-    override fun showNews(newsList: List<News>) {
-        if(::newsAdapter.isInitialized) {
-            newsAdapter.updateList(newsList)
-        }
-        ll_result.visibility = View.VISIBLE
-    }
-
-    override fun showError(errorMessage: String) {
+    fun showError(errorMessage: String) {
         if(errorMessage.isBlank()) {
             Toast.makeText(requireContext(), getString(R.string.something_went_wrong), Toast.LENGTH_SHORT).show()
         }else{
@@ -112,16 +121,11 @@ class SearchFragment : Fragment(), SearchContract.View {
         }
     }
 
-    override fun showLoading() {
+    fun showLoading() {
         progressBar.visibility = View.VISIBLE
     }
 
-    override fun hideLoading() {
+    fun hideLoading() {
         progressBar.visibility = View.GONE
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        presenter.onDestroy()
     }
 }

@@ -2,6 +2,7 @@ package com.veeyikpong.fastnews
 
 import android.app.Application
 import com.veeyikpong.fastnews.injection.netModule
+import com.veeyikpong.fastnews.injection.newsRepo
 import org.koin.core.context.startKoin
 
 class MyApplication: Application(){
@@ -9,7 +10,7 @@ class MyApplication: Application(){
         super.onCreate()
 
         startKoin {
-            modules(netModule)
+            modules(netModule, newsRepo)
         }
     }
 }
